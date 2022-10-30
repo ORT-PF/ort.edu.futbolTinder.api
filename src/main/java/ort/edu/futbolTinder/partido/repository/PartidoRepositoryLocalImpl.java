@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class PartidoRepositoryLocalImpl implements PartidoRepository {
+public class PartidoRepositoryLocalImpl implements JpaRepository<Partido,Long> {
     List<Partido> partidos = new ArrayList<>();
 
     @Override

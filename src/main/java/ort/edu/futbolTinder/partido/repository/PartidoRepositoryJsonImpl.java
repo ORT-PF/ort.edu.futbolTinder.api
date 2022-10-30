@@ -12,21 +12,22 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class PartidoRepositoryJsonImpl implements PartidoRepository {
+public class PartidoRepositoryJsonImpl implements JpaRepository<Partido,Long> {
+    List<Partido> partidos = new ArrayList<>();
 
     @Override
     public List<Partido> findAll() {
-        return null;
+        return partidos;
     }
 
     @Override
     public List<Partido> findAll(Sort sort) {
-        return null;
+        return partidos;
     }
 
     @Override
     public Page<Partido> findAll(Pageable pageable) {
-        return null;
+        return new PageImpl<>(partidos);
     }
 
     @Override
@@ -41,12 +42,12 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
 
     @Override
     public void deleteById(Long aLong) {
-
+        partidos.removeIf(p -> aLong.equals(p.getId()));
     }
 
     @Override
     public void delete(Partido entity) {
-
+        partidos.remove(entity);
     }
 
     @Override
@@ -66,7 +67,8 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
 
     @Override
     public <S extends Partido> S save(S entity) {
-        return null;
+        partidos.add(entity);
+        return entity;
     }
 
     @Override
@@ -98,6 +100,7 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
     public <S extends Partido> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
+
 
     @Override
     public void deleteAllInBatch(Iterable<Partido> entities) {
