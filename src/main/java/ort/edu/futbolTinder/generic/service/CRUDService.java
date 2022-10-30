@@ -10,9 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static ort.edu.futbolTinder.utils.resolvers.SortingResolver.resolveSorting;
 
 @RequiredArgsConstructor
@@ -27,7 +26,7 @@ public abstract class CRUDService<DTO, Entity extends AppEntity, RequestDTO> {
         return getAllEntities(resolveSorting(sort))
                 .stream()
                 .map(this::mapToDTO)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public DTO get(Long id) {
