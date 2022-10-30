@@ -1,4 +1,4 @@
-package ort.edu.futbolTinder.error;
+package ort.edu.futbolTinder.controller.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

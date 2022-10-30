@@ -3,9 +3,9 @@ package ort.edu.futbolTinder.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ort.edu.futbolTinder.partido.entity.Partido;
-import ort.edu.futbolTinder.partido.repository.PartidoRepositoryJsonImpl;
-import ort.edu.futbolTinder.partido.repository.PartidoRepositoryLocalImpl;
+import ort.edu.futbolTinder.entity.Partido;
+import ort.edu.futbolTinder.repository.PartidoRepositoryJsonImpl;
+import ort.edu.futbolTinder.repository.PartidoRepositoryLocalImpl;
 
 @Configuration
 public class RepositoryConfig {

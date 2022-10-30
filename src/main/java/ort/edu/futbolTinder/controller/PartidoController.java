@@ -1,4 +1,4 @@
-package ort.edu.futbolTinder.partido.controller;
+package ort.edu.futbolTinder.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ort.edu.futbolTinder.generic.controller.CRUDController;
-import ort.edu.futbolTinder.partido.dto.request.PartidoRequestDTO;
-import ort.edu.futbolTinder.partido.dto.response.PartidoDTO;
-import ort.edu.futbolTinder.partido.service.PartidoService;
+import ort.edu.futbolTinder.dto.response.PartidoDTO;
+import ort.edu.futbolTinder.dto.request.PartidoRequestDTO;
+import ort.edu.futbolTinder.service.PartidoService;
 
 import java.util.List;
 

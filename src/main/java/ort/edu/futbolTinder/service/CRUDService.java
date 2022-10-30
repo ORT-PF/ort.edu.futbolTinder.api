@@ -1,10 +1,10 @@
-package ort.edu.futbolTinder.generic.service;
+package ort.edu.futbolTinder.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ort.edu.futbolTinder.generic.entity.AppEntity;
+import ort.edu.futbolTinder.entity.AppEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

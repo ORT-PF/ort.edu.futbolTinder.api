@@ -1,13 +1,12 @@
-package ort.edu.futbolTinder.partido.service;
+package ort.edu.futbolTinder.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import ort.edu.futbolTinder.generic.service.CRUDService;
-import ort.edu.futbolTinder.partido.dto.request.PartidoRequestDTO;
-import ort.edu.futbolTinder.partido.dto.response.PartidoDTO;
-import ort.edu.futbolTinder.partido.entity.Partido;
+import ort.edu.futbolTinder.dto.response.PartidoDTO;
+import ort.edu.futbolTinder.dto.request.PartidoRequestDTO;
+import ort.edu.futbolTinder.entity.Partido;
 
 import javax.persistence.EntityManager;
 import java.util.List;

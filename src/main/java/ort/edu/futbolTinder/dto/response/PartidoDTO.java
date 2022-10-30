@@ -1,4 +1,4 @@
-package ort.edu.futbolTinder.partido.dto.response;
+package ort.edu.futbolTinder.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
