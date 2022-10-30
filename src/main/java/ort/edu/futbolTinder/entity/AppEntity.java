@@ -1,4 +1,4 @@
-package ort.edu.futbolTinder.generic.entity;
+package ort.edu.futbolTinder.entity;
 
 import lombok.Data;
 
