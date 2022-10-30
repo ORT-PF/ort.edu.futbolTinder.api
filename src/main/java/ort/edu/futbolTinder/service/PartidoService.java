@@ -22,7 +22,8 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
     @Override
     protected void setEntityFieldsFromDTO(PartidoRequestDTO partidoRequestDTO, Partido partido) {
         setIfNotNull(partidoRequestDTO.getHostId(), partido::setHostId);
-        setIfNotNull(partidoRequestDTO.getFieldName(), partido::setFieldAddress);
+        setIfNotNull(partidoRequestDTO.getFieldName(), partido::setFieldName);
+        setIfNotNull(partidoRequestDTO.getFieldAddress(), partido::setFieldAddress);
         setIfNotNull(partidoRequestDTO.getDateTime(), partido::setDateTime);
         setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setOriginalQuota);
         setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setRemainingQuota);
