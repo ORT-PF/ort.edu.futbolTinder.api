@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +20,7 @@ public class Partido extends AppEntity {
     private LocalDateTime dateTime;
     private Integer originalQuota;
     private Integer remainingQuota;
-    private List<Long> joinedPlayers;
+    //private List<Long> joinedPlayers;
     private Double longitude;
     private Double latitude;
 
