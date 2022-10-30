@@ -27,7 +27,7 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
     @Override
     public List<Partido> findAll(Sort sort) {
-        return null;
+        return partidos;
     }
 
     @Override
