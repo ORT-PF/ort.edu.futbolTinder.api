@@ -12,6 +12,7 @@ import ort.edu.futbolTinder.partido.entity.Partido;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static ort.edu.futbolTinder.utils.mapping.MapperUtils.setIfNotNull;
 
 @Service
@@ -22,7 +23,15 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
 
     @Override
     protected void setEntityFieldsFromDTO(PartidoRequestDTO partidoRequestDTO, Partido partido) {
-        setIfNotNull(partidoRequestDTO.getCancha(), partido::setCancha);
+        setIfNotNull(partidoRequestDTO.getHostId(), partido::setHostId);
+        setIfNotNull(partidoRequestDTO.getFieldName(), partido::setFieldAddress);
+        setIfNotNull(partidoRequestDTO.getDateTime(), partido::setDateTime);
+        setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setOriginalQuota);
+        setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setRemainingQuota);
+        setIfNotNull(partidoRequestDTO.getLongitude(), partido::setLongitude);
+        setIfNotNull(partidoRequestDTO.getLatitude(), partido::setLatitude);
+        partido.setJoinedPlayers(emptyList());
+
     }
 
     public List<PartidoDTO> findMatchCandidates(double longitude, double latitude) {
