@@ -1,10 +1,10 @@
-package ort.edu.futbolTinder.generic.controller;
+package ort.edu.futbolTinder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ort.edu.futbolTinder.generic.service.CRUDService;
+import ort.edu.futbolTinder.service.CRUDService;
 
 import java.util.List;
 

@@ -1,10 +1,12 @@
-package ort.edu.futbolTinder.partido.repository;
+package ort.edu.futbolTinder.repository;
 
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
-import ort.edu.futbolTinder.partido.entity.Partido;
+
+
+import ort.edu.futbolTinder.entity.Partido;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +14,20 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class PartidoRepositoryJsonImpl implements PartidoRepository {
+public class PartidoRepositoryLocalImpl implements PartidoRepository {
+
+
+    ArrayList<Partido> partidos = new ArrayList<>();
 
     @Override
-    public List<Partido> findAll() {
-        return null;
+    public ArrayList<Partido> findAll() {
+        return partidos;
     }
+
 
     @Override
     public List<Partido> findAll(Sort sort) {
-        return null;
+        return partidos;
     }
 
     @Override
@@ -29,86 +35,147 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
         return null;
     }
 
+
     @Override
     public List<Partido> findAllById(Iterable<Long> longs) {
-        return null;
+        List<Partido> partidosPorId = new ArrayList<>();
+        for (Partido partido : partidos) {
+            for (Long id : longs) {
+                if(partido.getId().equals(id)) {
+                    partidosPorId.add(partido);
+                }
+            }
+        }
+        return partidosPorId;
     }
 
     @Override
     public long count() {
-        return 0;
+        return partidos.size();
     }
 
     @Override
-    public void deleteById(Long aLong) {
+    public void deleteById(Long id) {
+        for (Partido partido : partidos) {
+            if(partido.getId().equals(id)){
+                partidos.remove(partido);
+            }
+        }
 
     }
 
     @Override
     public void delete(Partido entity) {
-
+        partidos.remove(entity);
     }
 
     @Override
     public void deleteAllById(Iterable<? extends Long> longs) {
-
+        for (Partido partido : partidos) {
+            for (Long id : longs) {
+                if(partido.getId().equals(id)) {
+                    partidos.remove(partido);
+                }
+            }
+        }
     }
 
     @Override
     public void deleteAll(Iterable<? extends Partido> entities) {
-
+        for (Partido partido : entities) {
+            partidos.remove(partido);
+        }
     }
 
     @Override
     public void deleteAll() {
-
+        partidos.clear();
     }
 
+
+    // VER ESTE METODO
     @Override
     public <S extends Partido> S save(S entity) {
+        if (partidos.add(entity)) {
+            return entity;
+        }
         return null;
     }
 
+
+    // VER ESTE METODO
     @Override
     public <S extends Partido> List<S> saveAll(Iterable<S> entities) {
-        return null;
+        List<S> añadidos = new ArrayList<S>();
+        for (S s : entities) {
+            if (partidos.add(s)) {
+                añadidos.add(s);
+            }
+        }
+        return añadidos;
     }
 
+
+    // Y ESTE
     @Override
     public Optional<Partido> findById(Long aLong) {
-        return Optional.empty();
+        Optional<Partido> partidoDevuelto = Optional.empty();
+        for (Partido partido : partidos) {
+            if (partido.getId().equals(aLong)) {
+                partidoDevuelto = Optional.of(partido);
+            }
+        }
+        return partidoDevuelto;
     }
 
     @Override
     public boolean existsById(Long aLong) {
-        return false;
+        boolean existe = false;
+
+        for (Partido partido : partidos) {
+            if (partido.getId().equals(aLong)) {
+                existe = true;
+            }
+        }
+        return existe;
     }
 
+
+    // VER ESTE METODO
     @Override
     public void flush() {
 
     }
 
+
+    // VER ESTE METODO
     @Override
     public <S extends Partido> S saveAndFlush(S entity) {
-        return null;
+        return entity;
     }
 
+    // VER ESTE METODO
     @Override
     public <S extends Partido> List<S> saveAllAndFlush(Iterable<S> entities) {
-        return null;
+        return (List<S>) entities;
     }
 
+
+    // VER ESTE METODO
     @Override
     public void deleteAllInBatch(Iterable<Partido> entities) {
 
     }
 
+
+
+    // VER ESTE METODO
     @Override
     public void deleteAllByIdInBatch(Iterable<Long> longs) {
 
     }
 
+    // VER ESTE METODO
     @Override
     public void deleteAllInBatch() {
 
@@ -116,24 +183,44 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
 
     @Override
     public Partido getOne(Long aLong) {
-        return null;
+        int indice = Math.toIntExact(aLong);
+        return partidos.get(indice);
     }
+
 
     @Override
     public Partido getById(Long aLong) {
+        for (Partido partido : partidos) {
+            if (partido.getId().equals(aLong)) {
+                return partido;
+            }
+        }
         return null;
     }
 
+    // VER ESTE METODO
     @Override
     public Partido getReferenceById(Long aLong) {
+
+
         return null;
     }
+
 
     @Override
     public <S extends Partido> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
+        Optional<S> partido = Optional.empty();
+        for (Partido partido2 : partidos) {
+            if (partido2.equals(example)) {
+                partido = Optional.of((S)partido2);
+            }
+        }
+        return partido;
     }
 
+
+
+    // PREGUNTAR QUE HACE ESTE METODO
     @Override
     public <S extends Partido> List<S> findAll(Example<S> example) {
         return null;
@@ -143,6 +230,7 @@ public class PartidoRepositoryJsonImpl implements PartidoRepository {
     public <S extends Partido> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
+
 
     @Override
     public <S extends Partido> Page<S> findAll(Example<S> example, Pageable pageable) {

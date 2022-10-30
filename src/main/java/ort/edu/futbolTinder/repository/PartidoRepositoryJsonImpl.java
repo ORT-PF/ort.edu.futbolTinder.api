@@ -1,10 +1,10 @@
-package ort.edu.futbolTinder.partido.repository;
+package ort.edu.futbolTinder.repository;
 
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
-import ort.edu.futbolTinder.partido.entity.Partido;
+import ort.edu.futbolTinder.entity.Partido;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class PartidoRepositoryLocalImpl implements PartidoRepository {
+public class PartidoRepositoryJsonImpl implements JpaRepository<Partido,Long> {
     List<Partido> partidos = new ArrayList<>();
 
     @Override
