@@ -11,12 +11,21 @@ import ort.edu.futbolTinder.entity.Partido;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static ort.edu.futbolTinder.utils.mapping.MapperUtils.setIfNotNull;
 
 @Service
 public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequestDTO> {
-    public PartidoService(@Qualifier("local") JpaRepository<Partido,Long> repository, EntityManager entityManager, ModelMapper modelMapper) {
+    public PartidoService(@Qualifier("jpa") JpaRepository<Partido,Long> repository, EntityManager entityManager, ModelMapper modelMapper) {
         super(repository, entityManager, modelMapper, Partido.class, PartidoDTO.class);
+    }
+
+    @Override
+    protected PartidoDTO mapToDTO(Partido entity) {
+        PartidoDTO partidoDTO = super.mapToDTO(entity);
+        partidoDTO.setJoinedPlayers(emptyList());
+        partidoDTO.setRemainingQuota(partidoDTO.getOriginalQuota());
+        return partidoDTO;
     }
 
     @Override
@@ -26,7 +35,6 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
         setIfNotNull(partidoRequestDTO.getFieldAddress(), partido::setFieldAddress);
         setIfNotNull(partidoRequestDTO.getDateTime(), partido::setDateTime);
         setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setOriginalQuota);
-        setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setRemainingQuota);
         setIfNotNull(partidoRequestDTO.getLongitude(), partido::setLongitude);
         setIfNotNull(partidoRequestDTO.getLatitude(), partido::setLatitude);
 
