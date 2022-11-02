@@ -1,5 +1,6 @@
 package ort.edu.futbolTinder.repository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
 
 import org.springframework.data.repository.query.FluentQuery;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
+@Qualifier("local")
 public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
 
