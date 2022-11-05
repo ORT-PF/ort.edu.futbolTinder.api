@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ort.edu.futbolTinder.entity.Partido;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -252,5 +253,10 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
     @Override
     public <S extends Partido, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
+    }
+
+    @Override
+    public List<Partido> findAllByDateTimeBetween(LocalDateTime from, LocalDateTime to) {
+        return partidos;
     }
 }
