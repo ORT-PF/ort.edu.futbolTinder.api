@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +28,8 @@ public class Partido extends AppEntity {
     private LocalDateTime dateTime;
     @Column(name = "ORIGINAL_QUOTA", nullable = false)
     private Integer originalQuota;
-    //private List<Long> joinedPlayers;
+
+    private List<JoinedPlayer> joinedPlayers;
     @Column(name = "LONGITUDE", nullable = false)
     private Double longitude;
     @Column(name = "LATITUDE", nullable = false)

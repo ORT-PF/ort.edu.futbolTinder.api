@@ -47,7 +47,6 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
         setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setOriginalQuota);
         setIfNotNull(partidoRequestDTO.getLongitude(), partido::setLongitude);
         setIfNotNull(partidoRequestDTO.getLatitude(), partido::setLatitude);
-
     }
 
     public List<MatchCandidateDTO> matchCandidates(double latitude, double longitude, Long playerId, double distance, int days) {
@@ -66,16 +65,24 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
     private static Predicate<MatchCandidateDTO> distanceIsLowerThan(double distance) {
         return m -> m.getDistance() < distance;
     }
-
+    /* Endpoint unirse a partido que guarda a los jugadores que se unieron ->
+        Validaciones: Si no quedan cupos(409), tratar de re-unirme (400)
+     * filtrar partidos que no queden cupos
+     * filtrar partidos a los que ya me uní
+     * endpoint de partidos a los que me uní
+     * */
     private static Predicate<Partido> notJoined(Long playerId) {
+        //Filtrar partidos de los que soy participante
         return m -> true;
     }
+
     private static Predicate<Partido> hasRemainingQuota() {
+        //filtrar partidos con originalQuota-joinedPlayers.size = 0
         return m -> true;
     }
 
     private MatchCandidateDTO mapToMatchCandidateDTO(double latitude, double longitude, Partido m) {
-        MatchCandidateDTO mcDTO= modelMapper.map(m, MatchCandidateDTO.class);
+        MatchCandidateDTO mcDTO = modelMapper.map(m, MatchCandidateDTO.class);
         mcDTO.setRemainingQuota(m.getOriginalQuota());
         mcDTO.setDistance(calculateDistance(latitude, longitude, m.getLatitude(), m.getLongitude()));
         return mcDTO;
