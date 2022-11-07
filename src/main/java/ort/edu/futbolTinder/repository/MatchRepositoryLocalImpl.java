@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
 
-import ort.edu.futbolTinder.entity.Partido;
+import ort.edu.futbolTinder.entity.Match;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,89 +17,89 @@ import java.util.function.Function;
 
 @Repository
 @Qualifier("local")
-public class PartidoRepositoryLocalImpl implements PartidoRepository {
+public class MatchRepositoryLocalImpl implements MatchRepository {
 
 
-    ArrayList<Partido> partidos = new ArrayList<>();
+    ArrayList<Match> matches = new ArrayList<>();
 
     @Override
-    public ArrayList<Partido> findAll() {
-        return partidos;
+    public ArrayList<Match> findAll() {
+        return matches;
     }
 
 
     @Override
-    public List<Partido> findAll(Sort sort) {
-        return partidos;
+    public List<Match> findAll(Sort sort) {
+        return matches;
     }
 
     @Override
-    public Page<Partido> findAll(Pageable pageable) {
+    public Page<Match> findAll(Pageable pageable) {
         return null;
     }
 
 
     @Override
-    public List<Partido> findAllById(Iterable<Long> longs) {
-        List<Partido> partidosPorId = new ArrayList<>();
-        for (Partido partido : partidos) {
+    public List<Match> findAllById(Iterable<Long> longs) {
+        List<Match> matchesById = new ArrayList<>();
+        for (Match match : matches) {
             for (Long id : longs) {
-                if(partido.getId().equals(id)) {
-                    partidosPorId.add(partido);
+                if(match.getId().equals(id)) {
+                    matchesById.add(match);
                 }
             }
         }
-        return partidosPorId;
+        return matchesById;
     }
 
     @Override
     public long count() {
-        return partidos.size();
+        return matches.size();
     }
 
     @Override
     public void deleteById(Long id) {
-        for (Partido partido : partidos) {
-            if(partido.getId().equals(id)){
-                partidos.remove(partido);
+        for (Match match : matches) {
+            if(match.getId().equals(id)){
+                matches.remove(match);
             }
         }
 
     }
 
     @Override
-    public void delete(Partido entity) {
-        partidos.remove(entity);
+    public void delete(Match entity) {
+        matches.remove(entity);
     }
 
     @Override
     public void deleteAllById(Iterable<? extends Long> longs) {
-        for (Partido partido : partidos) {
+        for (Match match : matches) {
             for (Long id : longs) {
-                if(partido.getId().equals(id)) {
-                    partidos.remove(partido);
+                if(match.getId().equals(id)) {
+                    matches.remove(match);
                 }
             }
         }
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Partido> entities) {
-        for (Partido partido : entities) {
-            partidos.remove(partido);
+    public void deleteAll(Iterable<? extends Match> entities) {
+        for (Match match : entities) {
+            matches.remove(match);
         }
     }
 
     @Override
     public void deleteAll() {
-        partidos.clear();
+        matches.clear();
     }
 
 
     // VER ESTE METODO
     @Override
-    public <S extends Partido> S save(S entity) {
-        if (partidos.add(entity)) {
+    public <S extends Match> S save(S entity) {
+        if (matches.add(entity)) {
             return entity;
         }
         return null;
@@ -108,35 +108,35 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
     // VER ESTE METODO
     @Override
-    public <S extends Partido> List<S> saveAll(Iterable<S> entities) {
-        List<S> añadidos = new ArrayList<S>();
+    public <S extends Match> List<S> saveAll(Iterable<S> entities) {
+        List<S> agregados = new ArrayList<S>();
         for (S s : entities) {
-            if (partidos.add(s)) {
-                añadidos.add(s);
+            if (matches.add(s)) {
+                agregados.add(s);
             }
         }
-        return añadidos;
+        return agregados;
     }
 
 
     // Y ESTE
     @Override
-    public Optional<Partido> findById(Long aLong) {
-        Optional<Partido> partidoDevuelto = Optional.empty();
-        for (Partido partido : partidos) {
-            if (partido.getId().equals(aLong)) {
-                partidoDevuelto = Optional.of(partido);
+    public Optional<Match> findById(Long aLong) {
+        Optional<Match> foundMatch = Optional.empty();
+        for (Match match : matches) {
+            if (match.getId().equals(aLong)) {
+                foundMatch = Optional.of(match);
             }
         }
-        return partidoDevuelto;
+        return foundMatch;
     }
 
     @Override
     public boolean existsById(Long aLong) {
         boolean existe = false;
 
-        for (Partido partido : partidos) {
-            if (partido.getId().equals(aLong)) {
+        for (Match match : matches) {
+            if (match.getId().equals(aLong)) {
                 existe = true;
             }
         }
@@ -153,20 +153,20 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
     // VER ESTE METODO
     @Override
-    public <S extends Partido> S saveAndFlush(S entity) {
+    public <S extends Match> S saveAndFlush(S entity) {
         return entity;
     }
 
     // VER ESTE METODO
     @Override
-    public <S extends Partido> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Match> List<S> saveAllAndFlush(Iterable<S> entities) {
         return (List<S>) entities;
     }
 
 
     // VER ESTE METODO
     @Override
-    public void deleteAllInBatch(Iterable<Partido> entities) {
+    public void deleteAllInBatch(Iterable<Match> entities) {
 
     }
 
@@ -185,17 +185,17 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
     }
 
     @Override
-    public Partido getOne(Long aLong) {
+    public Match getOne(Long aLong) {
         int indice = Math.toIntExact(aLong);
-        return partidos.get(indice);
+        return matches.get(indice);
     }
 
 
     @Override
-    public Partido getById(Long aLong) {
-        for (Partido partido : partidos) {
-            if (partido.getId().equals(aLong)) {
-                return partido;
+    public Match getById(Long aLong) {
+        for (Match match : matches) {
+            if (match.getId().equals(aLong)) {
+                return match;
             }
         }
         return null;
@@ -203,7 +203,7 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
     // VER ESTE METODO
     @Override
-    public Partido getReferenceById(Long aLong) {
+    public Match getReferenceById(Long aLong) {
 
 
         return null;
@@ -211,52 +211,52 @@ public class PartidoRepositoryLocalImpl implements PartidoRepository {
 
 
     @Override
-    public <S extends Partido> Optional<S> findOne(Example<S> example) {
-        Optional<S> partido = Optional.empty();
-        for (Partido partido2 : partidos) {
-            if (partido2.equals(example)) {
-                partido = Optional.of((S)partido2);
+    public <S extends Match> Optional<S> findOne(Example<S> example) {
+        Optional<S> matches = Optional.empty();
+        for (Match match : this.matches) {
+            if (match.equals(example)) {
+                matches = Optional.of((S) match);
             }
         }
-        return partido;
+        return matches;
     }
 
 
 
     // PREGUNTAR QUE HACE ESTE METODO
     @Override
-    public <S extends Partido> List<S> findAll(Example<S> example) {
+    public <S extends Match> List<S> findAll(Example<S> example) {
         return null;
     }
 
     @Override
-    public <S extends Partido> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Match> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
 
     @Override
-    public <S extends Partido> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Match> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
     @Override
-    public <S extends Partido> long count(Example<S> example) {
+    public <S extends Match> long count(Example<S> example) {
         return 0;
     }
 
     @Override
-    public <S extends Partido> boolean exists(Example<S> example) {
+    public <S extends Match> boolean exists(Example<S> example) {
         return false;
     }
 
     @Override
-    public <S extends Partido, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends Match, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 
     @Override
-    public List<Partido> findAllByDateTimeBetween(LocalDateTime from, LocalDateTime to) {
-        return partidos;
+    public List<Match> findAllByDateTimeBetween(LocalDateTime from, LocalDateTime to) {
+        return matches;
     }
 }

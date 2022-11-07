@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PartidoDTO {
+public class MatchDTO {
     private Long id;
     private Long hostId;
     private String fieldName;

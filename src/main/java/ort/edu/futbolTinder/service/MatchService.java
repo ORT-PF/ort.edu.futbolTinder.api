@@ -3,11 +3,11 @@ package ort.edu.futbolTinder.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ort.edu.futbolTinder.dto.request.PartidoRequestDTO;
+import ort.edu.futbolTinder.dto.request.MatchRequestDTO;
 import ort.edu.futbolTinder.dto.response.MatchCandidateDTO;
-import ort.edu.futbolTinder.dto.response.PartidoDTO;
-import ort.edu.futbolTinder.entity.Partido;
-import ort.edu.futbolTinder.repository.PartidoRepository;
+import ort.edu.futbolTinder.dto.response.MatchDTO;
+import ort.edu.futbolTinder.entity.Match;
+import ort.edu.futbolTinder.repository.MatchRepository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -22,37 +22,37 @@ import static ort.edu.futbolTinder.utils.geography.GeographyUtils.calculateDista
 import static ort.edu.futbolTinder.utils.mapping.MapperUtils.setIfNotNull;
 
 @Service
-public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequestDTO> {
-    private final PartidoRepository partidoRepository;
+public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> {
+    private final MatchRepository matchRepository;
 
-    public PartidoService(@Qualifier("jpa") PartidoRepository repository, EntityManager entityManager, ModelMapper modelMapper) {
-        super(repository, entityManager, modelMapper, Partido.class, PartidoDTO.class);
-        partidoRepository = repository;
+    public MatchService(@Qualifier("jpa") MatchRepository repository, EntityManager entityManager, ModelMapper modelMapper) {
+        super(repository, entityManager, modelMapper, Match.class, MatchDTO.class);
+        matchRepository = repository;
     }
 
     @Override
-    protected PartidoDTO mapToDTO(Partido entity) {
-        PartidoDTO partidoDTO = super.mapToDTO(entity);
-        partidoDTO.setJoinedPlayers(emptyList());
-        partidoDTO.setRemainingQuota(partidoDTO.getOriginalQuota());
-        return partidoDTO;
+    protected MatchDTO mapToDTO(Match entity) {
+        MatchDTO matchDTO = super.mapToDTO(entity);
+        matchDTO.setJoinedPlayers(emptyList());
+        matchDTO.setRemainingQuota(matchDTO.getOriginalQuota());
+        return matchDTO;
     }
 
     @Override
-    protected void setEntityFieldsFromDTO(PartidoRequestDTO partidoRequestDTO, Partido partido) {
-        setIfNotNull(partidoRequestDTO.getHostId(), partido::setHostId);
-        setIfNotNull(partidoRequestDTO.getFieldName(), partido::setFieldName);
-        setIfNotNull(partidoRequestDTO.getFieldAddress(), partido::setFieldAddress);
-        setIfNotNull(partidoRequestDTO.getDateTime(), partido::setDateTime);
-        setIfNotNull(partidoRequestDTO.getOriginalQuota(), partido::setOriginalQuota);
-        setIfNotNull(partidoRequestDTO.getLongitude(), partido::setLongitude);
-        setIfNotNull(partidoRequestDTO.getLatitude(), partido::setLatitude);
+    protected void setEntityFieldsFromDTO(MatchRequestDTO matchRequestDTO, Match match) {
+        setIfNotNull(matchRequestDTO.getHostId(), match::setHostId);
+        setIfNotNull(matchRequestDTO.getFieldName(), match::setFieldName);
+        setIfNotNull(matchRequestDTO.getFieldAddress(), match::setFieldAddress);
+        setIfNotNull(matchRequestDTO.getDateTime(), match::setDateTime);
+        setIfNotNull(matchRequestDTO.getOriginalQuota(), match::setOriginalQuota);
+        setIfNotNull(matchRequestDTO.getLongitude(), match::setLongitude);
+        setIfNotNull(matchRequestDTO.getLatitude(), match::setLatitude);
     }
 
     public List<MatchCandidateDTO> matchCandidates(double latitude, double longitude, Long playerId, double distance, int days) {
         LocalDateTime from = now();
         LocalDateTime to = from.plusDays(days);
-        return partidoRepository.findAllByDateTimeBetween(from, to)
+        return matchRepository.findAllByDateTimeBetween(from, to)
                 .stream()
                 .filter(notJoined(playerId))
                 .filter(hasRemainingQuota())
@@ -71,17 +71,17 @@ public class PartidoService extends CRUDService<PartidoDTO, Partido, PartidoRequ
      * filtrar partidos a los que ya me uní
      * endpoint de partidos a los que me uní
      * */
-    private static Predicate<Partido> notJoined(Long playerId) {
+    private static Predicate<Match> notJoined(Long playerId) {
         //Filtrar partidos de los que soy participante
         return m -> true;
     }
 
-    private static Predicate<Partido> hasRemainingQuota() {
+    private static Predicate<Match> hasRemainingQuota() {
         //filtrar partidos con originalQuota-joinedPlayers.size = 0
         return m -> true;
     }
 
-    private MatchCandidateDTO mapToMatchCandidateDTO(double latitude, double longitude, Partido m) {
+    private MatchCandidateDTO mapToMatchCandidateDTO(double latitude, double longitude, Match m) {
         MatchCandidateDTO mcDTO = modelMapper.map(m, MatchCandidateDTO.class);
         mcDTO.setRemainingQuota(m.getOriginalQuota());
         mcDTO.setDistance(calculateDistance(latitude, longitude, m.getLatitude(), m.getLongitude()));
