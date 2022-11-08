@@ -26,11 +26,14 @@ public class Match extends AppEntity {
     private LocalDateTime dateTime;
     @Column(name = "ORIGINAL_QUOTA", nullable = false)
     private Integer originalQuota;
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
-    private List<MatchPlayer> matchPlayers;
     @Column(name = "LONGITUDE", nullable = false)
     private Double longitude;
     @Column(name = "LATITUDE", nullable = false)
     private Double latitude;
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
+    private List<MatchPlayer> matchPlayers;
 
+    public int calculateRemainingQuota(){
+        return originalQuota - matchPlayers.size();
+    }
 }

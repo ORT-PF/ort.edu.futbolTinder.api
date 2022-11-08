@@ -18,5 +18,5 @@ public class MatchPlayer extends AppEntity {
 
     @ManyToOne
     @JoinColumn(name = "MATCH_ID", nullable = false)
-    private Match group;
+    private Match match;
 }
