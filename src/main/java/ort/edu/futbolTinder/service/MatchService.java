@@ -111,11 +111,7 @@ public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> 
     public List<MatchDTO> joinedMatches(Long playerId) {
         return super.getAll(null)
                 .stream()
-                .filter(m -> m.getMatchPlayers()
-                        .stream()
-                        .map(MatchDTO.MatchPlayerDTO::getPlayerId)
-                        .collect(toList())
-                        .contains(playerId)
-                ).collect(toList());
+                .filter(m -> m.containsPlayer(playerId))
+                .collect(toList());
     }
 }
