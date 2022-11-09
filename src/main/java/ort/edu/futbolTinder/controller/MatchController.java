@@ -2,10 +2,7 @@ package ort.edu.futbolTinder.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ort.edu.futbolTinder.dto.request.MatchRequestDTO;
 import ort.edu.futbolTinder.dto.response.MatchCandidateDTO;
 import ort.edu.futbolTinder.dto.response.MatchDTO;
@@ -38,5 +35,11 @@ public class MatchController extends CRUDController<MatchDTO, MatchRequestDTO> {
                 distance.orElse(5d),
                 days.orElse(7)
         ), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/joinedMatches/{playerId}")
+    public ResponseEntity<List<MatchDTO>> joinedMatches(@PathVariable Long playerId) {
+        return new ResponseEntity<>(matchService.joinedMatches(playerId), HttpStatus.OK);
     }
 }

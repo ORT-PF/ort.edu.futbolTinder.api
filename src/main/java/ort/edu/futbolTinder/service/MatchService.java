@@ -87,7 +87,7 @@ public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> 
     public boolean alreadyJoinedOrHost(Long playerId, Long matchId) {
         Optional<Match> match = repository.findById(matchId);
         return match
-                .map(containsPlayer(playerId))
+                .map(m -> m.containsPlayer(playerId))
                 .orElse(false)
                 || match
                 .map(isHost(playerId))
@@ -96,7 +96,7 @@ public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> 
 
     public boolean hasRemainingQuota(Long matchId) {
         return repository.findById(matchId)
-                .map(matchHasRemainingQuota())
+                .map(Match::hasRemainingQuota)
                 .orElse(false);
     }
 
@@ -108,13 +108,14 @@ public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> 
         return m -> playerId.equals(m.getHostId());
     }
 
-    private static Function<Match, Boolean> containsPlayer(Long playerId) {
-        return m -> m.getMatchPlayers().stream()
-                .map(MatchPlayer::getPlayerId)
-                .collect(toList()).contains(playerId);
-    }
-
-    private static Function<Match, Boolean> matchHasRemainingQuota() {
-        return m -> m.calculateRemainingQuota() > 0;
+    public List<MatchDTO> joinedMatches(Long playerId) {
+        return super.getAll(null)
+                .stream()
+                .filter(m -> m.getMatchPlayers()
+                        .stream()
+                        .map(MatchDTO.MatchPlayerDTO::getPlayerId)
+                        .collect(toList())
+                        .contains(playerId)
+                ).collect(toList());
     }
 }

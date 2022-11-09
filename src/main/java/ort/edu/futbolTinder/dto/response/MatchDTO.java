@@ -24,7 +24,7 @@ public class MatchDTO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    private static class MatchPlayerDTO{
+    public static class MatchPlayerDTO{
         private Long playerId;
     }
 

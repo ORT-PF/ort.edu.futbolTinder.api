@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +34,18 @@ public class Match extends AppEntity {
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
     private List<MatchPlayer> matchPlayers;
 
-    public int calculateRemainingQuota(){
+    public int calculateRemainingQuota() {
         return originalQuota - matchPlayers.size();
+    }
+
+    public boolean containsPlayer(Long playerId) {
+        return matchPlayers.stream()
+                .map(MatchPlayer::getPlayerId)
+                .collect(Collectors.toList())
+                .contains(playerId);
+    }
+
+    public boolean hasRemainingQuota() {
+        return calculateRemainingQuota() > 0;
     }
 }
