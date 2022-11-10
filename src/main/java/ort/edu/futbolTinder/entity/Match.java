@@ -5,17 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "PARTIDOS")
-public class Partido extends AppEntity {
+public class Match extends AppEntity {
 
     @Column(name = "HOST_ID", nullable = false)
     private Long hostId;
@@ -27,10 +27,25 @@ public class Partido extends AppEntity {
     private LocalDateTime dateTime;
     @Column(name = "ORIGINAL_QUOTA", nullable = false)
     private Integer originalQuota;
-    //private List<Long> joinedPlayers;
     @Column(name = "LONGITUDE", nullable = false)
     private Double longitude;
     @Column(name = "LATITUDE", nullable = false)
     private Double latitude;
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
+    private List<MatchPlayer> matchPlayers;
 
+    public int calculateRemainingQuota() {
+        return originalQuota - matchPlayers.size();
+    }
+
+    public boolean containsPlayer(Long playerId) {
+        return matchPlayers.stream()
+                .map(MatchPlayer::getPlayerId)
+                .collect(Collectors.toList())
+                .contains(playerId);
+    }
+
+    public boolean hasRemainingQuota() {
+        return calculateRemainingQuota() > 0;
+    }
 }
