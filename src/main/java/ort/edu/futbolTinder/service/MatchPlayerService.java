@@ -42,4 +42,8 @@ public class MatchPlayerService {
     public void clear() {
         matchPlayerRepository.deleteAll();
     }
+
+    public void leave(Long playerId, Long matchId) {
+        matchPlayerRepository.deleteByPlayerIdAndMatch_Id(playerId, matchId);
+    }
 }
