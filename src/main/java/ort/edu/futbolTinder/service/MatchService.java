@@ -114,4 +114,8 @@ public class MatchService extends CRUDService<MatchDTO, Match, MatchRequestDTO> 
                 .filter(m -> m.containsPlayer(playerId))
                 .collect(toList());
     }
+
+    public void clearOld() {
+        matchRepository.deleteByDateTimeBefore(LocalDateTime.now());
+    }
 }

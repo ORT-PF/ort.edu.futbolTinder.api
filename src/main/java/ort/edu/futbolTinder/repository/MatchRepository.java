@@ -12,4 +12,5 @@ import java.util.List;
 @Qualifier("jpa")
 public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findAllByDateTimeBetween(LocalDateTime from, LocalDateTime to);
+    void deleteByDateTimeBefore(LocalDateTime to);
 }
