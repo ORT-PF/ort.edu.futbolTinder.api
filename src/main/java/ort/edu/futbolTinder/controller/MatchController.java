@@ -46,6 +46,6 @@ public class MatchController extends CRUDController<MatchDTO, MatchRequestDTO> {
     @DeleteMapping("/clear_old")
     public ResponseEntity<Void> clearOld() {
         matchService.clearOld();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT)
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
