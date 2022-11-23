@@ -16,14 +16,21 @@ public class MatchPlayerController {
     }
 
     @PostMapping("/unirse")
-    public ResponseEntity<Long> matchCandidates(@RequestParam Long playerId,
-                                                @RequestParam Long matchId) throws Exception {
+    public ResponseEntity<Long> join(@RequestParam Long playerId,
+                                     @RequestParam Long matchId) throws Exception {
         return new ResponseEntity<>(matchPlayerService.joinPlayer(playerId, matchId), HttpStatus.OK);
     }
 
     @DeleteMapping("/clear")
     public ResponseEntity<Void> clear() {
         matchPlayerService.clear();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/salir")
+    public ResponseEntity<Void> leave(@RequestParam Long playerId,
+                                      @RequestParam Long matchId) throws Exception {
+        matchPlayerService.leave(playerId, matchId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
