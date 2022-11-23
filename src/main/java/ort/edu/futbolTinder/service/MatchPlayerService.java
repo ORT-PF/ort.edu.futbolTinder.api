@@ -3,6 +3,7 @@ package ort.edu.futbolTinder.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ort.edu.futbolTinder.entity.Match;
 import ort.edu.futbolTinder.entity.MatchPlayer;
 import ort.edu.futbolTinder.error.MatchDoesntExistException;
@@ -43,6 +44,7 @@ public class MatchPlayerService {
         matchPlayerRepository.deleteAll();
     }
 
+    @Transactional
     public void leave(Long playerId, Long matchId) {
         matchPlayerRepository.deleteByPlayerIdAndMatch_Id(playerId, matchId);
     }
