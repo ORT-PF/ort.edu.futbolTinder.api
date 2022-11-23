@@ -38,4 +38,8 @@ public class MatchPlayerService {
         matchPlayer.setMatch(entityManager.getReference(Match.class, matchId));
         return matchPlayer;
     }
+
+    public void clear() {
+        matchPlayerRepository.deleteAll();
+    }
 }
