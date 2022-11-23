@@ -42,4 +42,10 @@ public class MatchController extends CRUDController<MatchDTO, MatchRequestDTO> {
     public ResponseEntity<List<MatchDTO>> joinedMatches(@PathVariable Long playerId) {
         return new ResponseEntity<>(matchService.joinedMatches(playerId), HttpStatus.OK);
     }
+
+    @DeleteMapping("/clear_old")
+    public ResponseEntity<Void> clearOld() {
+        matchService.clearOld();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT)
+    }
 }
